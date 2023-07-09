@@ -28,16 +28,14 @@ import javax.swing.SwingConstants;
 import client.EmissorDeMensagem;
 import server.Pacote;
 
-public class ChatPrivado extends JDialog{
+public class ViewChatPrivado extends JDialog{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private final String nomeOrigem;
-	private final Integer idOrigem;
 	private final String nomeDestino;
-	private final Integer idDestino;
 	private final JFrame frame;
 	private final JPanel panel;
 	private final JScrollPane scrollPane;
@@ -45,22 +43,18 @@ public class ChatPrivado extends JDialog{
 	private final JLabel label1;
 	private final JTextField textField;
 	private final JButton button;
-	private final Chat chat;
-	private final EmissorDeMensagem emissorDeMensagem;
+	private final ViewChat chat;
 	private JPanel panel_1;
 	private JPanel panel_2;
 	private JButton btnLimpar;
 	private JPanel panel_3;
 	private JLabel lblchatGeral;
 
-	public ChatPrivado (Window window, EmissorDeMensagem emissor, String nomeOrigem,Integer idOrigem, String nomeDestino, Integer idDestino, Chat chat) {
+	public ViewChatPrivado (Window window, String nomeOrigem, String nomeDestino, ViewChat chat) {
 		super(window);
 		
 		this.nomeOrigem = nomeOrigem;
-		this.emissorDeMensagem = emissor;
 		this.chat = chat;
-		this.idOrigem = idOrigem;
-		this.idDestino = idDestino;
 		this.nomeDestino = nomeDestino;
 
 
@@ -75,18 +69,11 @@ public class ChatPrivado extends JDialog{
 				textField.setText("");
 				//ChatPrivado.this.EXIT_ON_CLOSE);
 				//ChatPrivado.this.frame.hide();
-				chat.removeConversaPrivada(ChatPrivado.this);
+				chat.removeConversaPrivada(ViewChatPrivado.this);
 			}
 		});
 		this.panel = new JPanel();
 		this.fieldChat = new JTextArea(10, 60);
-		
-//		fieldChat.addComponentListener(new ComponentAdapter() {
-//			@Override
-//			public void componentResized(ComponentEvent e) {
-//				ChatPrivado.this.fieldChat.setFont(new Font("monospaced", 25,25));
-//			}
-//		});
 		this.fieldChat.setEditable(false);
 		this.scrollPane = new JScrollPane(this.fieldChat);
 
@@ -165,18 +152,9 @@ public class ChatPrivado extends JDialog{
 		return nomeOrigem;
 	}
 
-	public Integer getIdOrigem() {
-		return idOrigem;
-	}
-
 	public String getNomeDestino() {
 		return nomeDestino;
 	}
-
-	public Integer getIdDestino() {
-		return idDestino;
-	}
-
 
 
 	public void adicionaMensagem(String mensagem) {
@@ -197,8 +175,8 @@ public class ChatPrivado extends JDialog{
 		Pacote p = new Pacote(this.idOrigem,this.idDestino,this.nomeOrigem,this.nomeDestino,msg,agora);//new Pacote(this.idOrigem, this.nomeOrigem, msg, agora);
 		System.out.println("enviando msg do cliente: " + p.getMessage());
 		emissorDeMensagem.envia(p);
+		this.chat.get
 		adicionaMensagem(p.getMessage().toString());
-		//		emissorDeMensagem.envia("msg;" + agora + ";" + textField.getText() + ";" + nome);
 		textField.setText("");
 	}
 
@@ -209,8 +187,8 @@ public class ChatPrivado extends JDialog{
 	@Override
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub
-		ChatPrivado p = (ChatPrivado) obj;
-		return this.idDestino.equals(p.idDestino) && this.idOrigem.equals(p.idOrigem);
+		ViewChatPrivado p = (ViewChatPrivado) obj;
+		return this.nomeDestino.equalsIgnoreCase(p.nomeDestino) && this.nomeOrigem.equalsIgnoreCase(p.nomeOrigem);
 	}
 
 	

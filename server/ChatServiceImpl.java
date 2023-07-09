@@ -11,7 +11,6 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static Integer nextID = 1;
 	private List<ChatClient> clients;
 
     public ChatServiceImpl() throws RemoteException {
@@ -34,6 +33,19 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
             client.receiveMessage(message);
         }
     }
+    
+    @Override
+    public void privateMessage(String message, ChatClient sender, String receiverName) throws Exception {
+//        for (ChatClient client : clients) {
+//            if (client.getName().equals(receiverName)) {
+//                client.receivePrivateMessage(message, sender);
+//                return;
+//            }
+//        }
+//        sender.receiveMessage("O destinatário não está disponível ou não existe: " + receiverName, null);
+        throw new Exception("O destinátário não está disponível ou foi desconectado");
+    }
+
 
 }
 
